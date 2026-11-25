@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!--
+  layout.html
+  Kerangka halaman yang dipakai bersama oleh modul Kandidat dan Lowongan.
+  Placeholder TITLE, CONTENT, ACTIVE_KANDIDAT, dan ACTIVE_LOWONGAN diisi oleh BaseView.php.
+-->
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{TITLE}} | NusaTech Solutions</title>
+
+  <!-- Font utama aplikasi: Space Grotesk. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Aset lokal: favicon dan stylesheet utama. -->
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <main class="wrap">
+    <!-- Identitas perusahaan IT: logo diambil dari folder assets. -->
+    <header class="brand">
+      <img src="assets/logo.svg" width="56" height="62" alt="Logo NusaTech">
+      <div><h1>NUSATECH</h1><p>IT Solutions &amp; Digital Talent</p></div>
+    </header>
+
+    <!-- Informasi singkat jam kerja tim rekrutmen. -->
+    <div class="pill"><i></i>Tim Talent Acquisition aktif Senin-Jumat, 08.00-17.00 WIB</div>
+
+    <!-- Isi halaman dari skin atau form yang dipilih presenter. -->
+    {{CONTENT}}
+  </main>
+
+  <!-- Credit pembuat aplikasi di bagian paling bawah halaman. -->
+  <footer class="credit">&copy; 2026 NusaTech &middot; Dibuat oleh <strong>Jaka Permana Herawan</strong></footer>
+
+  <!-- Navigasi tetap di bawah: daftar kandidat dan daftar lowongan. -->
+  <nav class="nav">
+    <a class="{{ACTIVE_KANDIDAT}}" href="index.php"><span>👤</span>Kandidat</a>
+    <a class="{{ACTIVE_LOWONGAN}}" href="index.php?page=lowongan"><span>📋</span>Lowongan</a>
+  </nav>
+</body>
+</html>

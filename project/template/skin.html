@@ -1,0 +1,25 @@
+<!--
+  skin.html
+  Template daftar kandidat (Strict Passive View).
+  Hanya menyediakan kerangka; placeholder TABLE_ROWS dan TOTAL_DATA diisi oleh ViewKandidat.php.
+-->
+<section class="hero">
+  <h2>Pusat Rekrutmen Talenta Digital</h2>
+  <p>Kelola kandidat, pantau lowongan IT, dan temukan talenta terbaik untuk tim digital Anda.</p>
+
+  <!-- Tombol cepat menuju form kandidat dan daftar lowongan. -->
+  <a class="btn primary" href="index.php?aksi=form">Tambah kandidat</a>
+  <a class="btn ghost" href="index.php?page=lowongan">Lihat lowongan</a>
+</section>
+
+<h3 class="eyebrow">DAFTAR KANDIDAT KARYAWAN</h3>
+<div class="card">
+  <!-- Tabel dibungkus .scroll agar tetap bisa digeser di layar kecil. -->
+  <div class="scroll"><table>
+    <thead><tr><th>No</th><th>Nama</th><th>Posisi Dilamar</th><th>Domisili</th><th>Skor Tes</th><th>Pengalaman</th><th>Aksi</th></tr></thead>
+    <tbody>{{TABLE_ROWS}}</tbody>
+  </table></div>
+
+  <!-- Ringkasan jumlah data dan tautan tambah kandidat. -->
+  <div class="foot"><span>Total kandidat: <b>{{TOTAL_DATA}}</b></span><a class="btn primary sm" href="index.php?aksi=form">+ Tambah Kandidat</a></div>
+</div>

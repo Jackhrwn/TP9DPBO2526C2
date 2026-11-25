@@ -1,0 +1,25 @@
+<!--
+  skin_lowongan.html
+  Template daftar lowongan (Strict Passive View).
+  Placeholder TABLE_ROWS dan TOTAL_DATA diisi oleh ViewLowongan.php.
+-->
+<section class="hero">
+  <h2>Lowongan IT yang sedang dibuka</h2>
+  <p>Atur posisi, kuota, dan status rekrutmen untuk setiap tim teknologi.</p>
+
+  <!-- Tautan cepat ke form lowongan dan daftar kandidat. -->
+  <a class="btn primary" href="index.php?page=lowongan&aksi=form">Tambah lowongan</a>
+  <a class="btn ghost" href="index.php">Lihat kandidat</a>
+</section>
+
+<h3 class="eyebrow">DAFTAR LOWONGAN</h3>
+<div class="card">
+  <!-- Tabel dapat digeser horizontal pada layar sempit. -->
+  <div class="scroll"><table>
+    <thead><tr><th>No</th><th>Posisi</th><th>Departemen</th><th>Lokasi</th><th>Kuota</th><th>Status</th><th>Aksi</th></tr></thead>
+    <tbody>{{TABLE_ROWS}}</tbody>
+  </table></div>
+
+  <!-- Ringkasan jumlah lowongan dan tautan tambah data. -->
+  <div class="foot"><span>Total lowongan: <b>{{TOTAL_DATA}}</b></span><a class="btn primary sm" href="index.php?page=lowongan&aksi=form">+ Tambah Lowongan</a></div>
+</div>

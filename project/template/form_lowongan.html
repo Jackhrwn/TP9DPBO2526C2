@@ -1,0 +1,26 @@
+<!--
+  form_lowongan.html
+  Template form tambah/ubah lowongan.
+  Placeholder HEADING, AKSI, ID, field data, dan STATUS_OPTIONS diisi oleh ViewLowongan.php.
+-->
+<h3 class="eyebrow">LOWONGAN</h3>
+<form class="card form" method="post" action="index.php">
+  <h2>{{HEADING}}</h2>
+
+  <!-- Field tersembunyi: modul, jenis aksi (tambah/ubah), dan id data. -->
+  <input type="hidden" name="page" value="lowongan">
+  <input type="hidden" name="action" value="{{AKSI}}">
+  <input type="hidden" name="id" value="{{ID}}">
+
+  <!-- Data lowongan yang wajib diisi. -->
+  <label>Nama posisi<input name="judul" value="{{JUDUL}}" required></label>
+  <label>Departemen<input name="departemen" value="{{DEPARTEMEN}}" required></label>
+  <label>Lokasi kerja<input name="lokasi" value="{{LOKASI}}" required></label>
+  <label>Kuota (orang)<input type="number" name="kuota" min="1" value="{{KUOTA}}" required></label>
+
+  <!-- Pilihan status dirakit presenter agar View tetap pasif. -->
+  <label>Status<select name="status">{{STATUS_OPTIONS}}</select></label>
+
+  <!-- Tombol simpan dan batal kembali ke daftar lowongan. -->
+  <div class="btns"><button class="btn primary" type="submit">Simpan lowongan</button><a class="btn ghost" href="index.php?page=lowongan">Batal</a></div>
+</form>

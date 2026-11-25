@@ -1,0 +1,27 @@
+<!--
+  form.html
+  Template form tambah/ubah kandidat.
+  Placeholder HEADING, AKSI, ID, POSISI_OPTIONS, dan nilai field diisi oleh ViewKandidat.php.
+-->
+<h3 class="eyebrow">KANDIDAT</h3>
+<form class="card form" method="post" action="index.php">
+  <h2>{{HEADING}}</h2>
+
+  <!-- Field tersembunyi: modul, jenis aksi (tambah/ubah), dan id data. -->
+  <input type="hidden" name="page" value="kandidat">
+  <input type="hidden" name="action" value="{{AKSI}}">
+  <input type="hidden" name="id" value="{{ID}}">
+
+  <!-- Data kandidat yang wajib diisi. -->
+  <label>Nama lengkap<input name="nama" value="{{NAMA}}" required></label>
+  <label>Posisi dilamar
+    <select name="posisi" required>{{POSISI_OPTIONS}}</select>
+    <small class="hint">Hanya lowongan berstatus Buka yang dapat dilamar.</small>
+  </label>
+  <label>Domisili<input name="domisili" value="{{DOMISILI}}" required></label>
+  <label>Skor tes (0-100)<input type="number" name="skorTes" min="0" max="100" value="{{SKOR}}" required></label>
+  <label>Pengalaman (tahun)<input type="number" name="pengalamanTahun" min="0" value="{{PENGALAMAN}}" required></label>
+
+  <!-- Tombol simpan dan batal kembali ke daftar kandidat. -->
+  <div class="btns"><button class="btn primary" type="submit">Simpan kandidat</button><a class="btn ghost" href="index.php">Batal</a></div>
+</form>
