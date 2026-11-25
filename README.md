@@ -28,50 +28,66 @@ saya tidak melakukan kecurangan seperti yang telah dispesifikasikan. Aamiin.
 | Komponen | Keterangan |
 |---|---|
 | Bahasa | PHP 8.0+ (memakai `match`, typed properties, constructor promotion) |
-| Database | MySQL/MariaDB, diakses lewat PDO |
+| Database | MySQL/MariaDB, diakses lewat PDO prepared statement |
 | Arsitektur | Model–View–Presenter dengan **Strict Passive View** |
 | Tampilan | HTML5, CSS3, Google Fonts (Space Grotesk), tema IT biru–teal |
 | Server lokal | XAMPP/Laragon atau PHP built-in server |
+| Tanpa dependensi | Tidak memakai framework, Composer, atau rewrite rule |
 
 ## Struktur Folder
 
 ```text
 TP9DPBO2526C2/
-├── dokumentasi/                  # screenrecord demo + panduan konversi ke GIF
-│   ├── CRUD Kandisat.gif         # video demo modul Kandidat
-│   └── CRUD Lowongan.gif         # video demo modul Lowongan
-├── project/                      # kode aplikasi yang dijalankan
-│   ├── assets/                   # berkas statis
-│   │   ├── logo.svg              # logo header + favicon
-│   │   └── style.css             # stylesheet utama (berkomentar, per bagian)
-│   ├── models/                   # entity, koneksi, query, kontrak model
-│   │   ├── DB.php
-│   │   ├── Kandidat.php
-│   │   ├── KontrakModel.php
-│   │   ├── Lowongan.php
-│   │   ├── TabelKandidat.php
-│   │   └── TabelLowongan.php
-│   ├── presenters/               # logika penyajian dan validasi
-│   │   ├── KontrakPresenter.php
-│   │   ├── PresenterKandidat.php
-│   │   └── PresenterLowongan.php
-│   ├── template/                 # template HTML ber-token
-│   │   ├── form.html
-│   │   ├── form_lowongan.html
-│   │   ├── layout.html
-│   │   ├── skin.html
-│   │   └── skin_lowongan.html
-│   ├── views/                    # perakit token template
-│   │   ├── BaseView.php
-│   │   ├── KontrakView.php
-│   │   ├── ViewKandidat.php
-│   │   └── ViewLowongan.php
-│   └── index.php                 # front controller aplikasi
-├── mvp_db.sql                    # skema database + data contoh
-└── README.md                     # dokumen ini
+├── dokumentasi/                      # demo aplikasi
+│   ├── CRUD-Kandidat.gif             # animasi demo modul Kandidat 
+│   └── CRUD-Lowongan.gif             # animasi demo modul Lowongan 
+├── project/                          # document root aplikasi
+│   ├── assets/                       # berkas statis
+│   │   ├── logo.svg                  # logo header + favicon
+│   │   └── style.css                 # stylesheet utama (berkomentar, per bagian)
+│   ├── models/                       # entity, koneksi, query, kontrak model
+│   │   ├── DB.php                    # koneksi PDO + eksekusi prepared statement
+│   │   ├── Kandidat.php              # entity kandidat
+│   │   ├── KontrakModel.php          # interface KontrakModel & KontrakModelLowongan
+│   │   ├── Lowongan.php              # entity lowongan
+│   │   ├── TabelKandidat.php         # query tabel kandidat
+│   │   └── TabelLowongan.php         # query tabel lowongan
+│   ├── presenters/                   # logika penyajian dan validasi
+│   │   ├── KontrakPresenter.php      # interface presenter + helper h()
+│   │   ├── PresenterKandidat.php     # CRUD kandidat + dropdown posisi
+│   │   └── PresenterLowongan.php     # CRUD lowongan + opsi status
+│   ├── template/                     # template HTML ber-token
+│   │   ├── form.html                 # form tambah/ubah kandidat
+│   │   ├── form_lowongan.html        # form tambah/ubah lowongan
+│   │   ├── layout.html               # kerangka halaman + navigasi bawah
+│   │   ├── skin.html                 # daftar kandidat
+│   │   └── skin_lowongan.html        # daftar lowongan
+│   ├── views/                        # perakit token template
+│   │   ├── BaseView.php              # memuat template + membungkus layout
+│   │   ├── KontrakView.php           # interface view kandidat & lowongan
+│   │   ├── ViewKandidat.php          # render daftar/form kandidat
+│   │   └── ViewLowongan.php          # render daftar/form lowongan
+│   └── index.php                     # front controller aplikasi
+├── mvp_db.sql                        # skema database + data contoh
+└── README.md                         # dokumen ini
 ```
 
+Keterangan singkat:
+
+- `dokumentasi/` menyimpan GIF demo yang dipakai di README.
+- `project/` adalah document root; jalankan aplikasi lewat web server, bukan
+  dengan membuka `index.php` langsung dari filesystem.
+- `mvp_db.sql` membuat database `mvp_kandidat_db`, kedua tabel, dan data contoh.
+- Semua aset tampilan (`style.css`, `logo.svg`) bersifat lokal; hanya font yang
+  diambil dari Google Fonts.
+
 ## Arsitektur
+
+```text
+Browser → index.php → Presenter → Model → MySQL (PDO)
+                          │
+                          └→ View → template/*.html → HTML
+```
 
 | Lapisan | Modul Kandidat | Modul Lowongan | File kontrak |
 |---|---|---|---|
@@ -86,7 +102,8 @@ Dipakai bersama:
 - `models/DB.php` – koneksi PDO dan eksekusi prepared statement.
 - `views/BaseView.php` – memuat template lalu membungkusnya dengan `layout.html`.
 - `project/assets/style.css` – seluruh gaya tampilan, disusun per bagian.
-- `project/assets/logo.svg` – logo NusaTech (hexagon + kurung kode), dipakai di header dan favicon.
+- `project/assets/logo.svg` – logo NusaTech (hexagon + kurung kode), dipakai di
+  header dan favicon.
 
 ### Tanggung jawab tiap lapisan
 
@@ -127,19 +144,29 @@ Database: `mvp_kandidat_db` (dibuat otomatis oleh `mvp_db.sql`).
 | `kuota` | INT, default 1 | Jumlah orang yang dibutuhkan |
 | `status` | ENUM('Buka','Tutup'), default 'Buka' | Status rekrutmen |
 
-Data contoh: **5 kandidat** dan **5 lowongan**. Semua posisi kandidat pada data
-contoh memiliki lowongan yang sesuai.
+Data contoh: **5 kandidat** dan **5 lowongan** (4 `Buka`, 1 `Tutup`).
+Kandidat `QA Engineer` pada data contoh mengacu ke lowongan yang berstatus
+`Tutup`; posisi lama tersebut tetap dipertahankan saat kandidat diedit.
 
 ## Fitur
+
+**CRUD dan navigasi**
 
 - Branding dan konten bertema perusahaan IT **NusaTech Solutions**.
 - Daftar kandidat dan lowongan diurutkan berdasarkan id secara ascending,
   sehingga data yang baru ditambahkan selalu muncul di baris paling bawah.
 - Tambah, ubah, dan hapus data untuk kedua modul.
-- Dropdown **posisi yang dilamar** pada form tambah/ubah kandidat:
-  - hanya berisi posisi dari lowongan berstatus `Buka`;
-  - posisi lama yang lowongannya sudah tidak aktif tetap ditampilkan saat edit;
-  - jika belum ada lowongan buka, dropdown menampilkan pesan khusus.
+- Navigasi bawah hanya berisi menu **Kandidat** dan **Lowongan**.
+- Konfirmasi sebelum menghapus data.
+
+**Dropdown posisi kandidat**
+
+- Hanya berisi posisi dari lowongan berstatus `Buka`.
+- Posisi lama yang lowongannya sudah tidak aktif tetap ditampilkan saat edit.
+- Jika belum ada lowongan `Buka`, dropdown menampilkan pesan khusus.
+
+**Validasi dan keamanan**
+
 - Validasi server-side:
   - nama/judul/posisi/departemen wajib diisi;
   - posisi kandidat harus berasal dari lowongan `Buka` (kecuali posisi lama
@@ -148,12 +175,16 @@ contoh memiliki lowongan yang sesuai.
   - pengalaman tidak boleh negatif;
   - kuota minimal 1;
   - status lowongan hanya `Buka` atau `Tutup`.
+- Form juga memakai atribut HTML `required`, `min`, dan `max` sebagai validasi
+  awal di browser.
 - Escape output dengan `htmlspecialchars` untuk mencegah XSS.
+- Semua query memakai prepared statement untuk mencegah SQL injection.
+
+**Tampilan**
+
 - Badge status lowongan (hijau untuk `Buka`, merah untuk `Tutup`).
 - Empty state saat tabel belum berisi data.
-- Layout responsif: tabel dapat digeser, navigasi bawah tetap terlihat.
-- Navigasi bawah hanya berisi menu **Kandidat** dan **Lowongan**.
-- Konfirmasi sebelum menghapus data.
+- Layout responsif: tabel dapat digeser dan navigasi bawah tetap terlihat.
 
 ## Alur Program
 
@@ -199,6 +230,25 @@ contoh memiliki lowongan yang sesuai.
   - merakit opsi posisi kandidat dari lowongan berstatus `Buka`.
 - `h()` didefinisikan sekali di `presenters/KontrakPresenter.php`.
 
+## Dokumentasi
+
+Demo berikut direkam langsung dari aplikasi dan disimpan di folder
+`dokumentasi/`.
+
+### Modul Kandidat
+
+<img width="720" height="371" alt="CRUD-Kandidat" src="https://github.com/user-attachments/assets/45c389d6-4159-4181-bf56-8c3021d1fd16" />
+
+Skenario: melihat daftar, menambah kandidat dengan posisi dari lowongan `Buka`,
+mengubah data, lalu menghapus data dengan konfirmasi.
+
+### Modul Lowongan
+
+<img width="720" height="372" alt="CRUD-Lowongan" src="https://github.com/user-attachments/assets/f43a3e26-2687-46d5-843e-9cb8f6b78c77" />
+
+Skenario: menambah lowongan baru, memilih status `Buka`/`Tutup`, mengubah data,
+dan menghapus lowongan.
+
 ## Pengujian Manual
 
 1. Halaman awal menampilkan 5 kandidat; data lama di atas dan data baru
@@ -217,15 +267,6 @@ contoh memiliki lowongan yang sesuai.
 9. Perkecil layar: tabel dapat digeser dan navigasi bawah tetap rapi.
 10. Refresh setelah POST tidak mengulang aksi (karena redirect).
 
-## Dokumentasi
-
-### Kandidat
-<img width="210" height="108" alt="CRUD Kandidat" src="https://github.com/user-attachments/assets/9dcf7d9e-759b-4aa3-889e-dc47bc014e8b" />
-
-### Lowongan
-<img width="196" height="102" alt="CRUD Lowongan" src="https://github.com/user-attachments/assets/100cb3c4-eabf-438c-8428-f9e175d408cc" />
-
-
 ## Catatan
 
 - `kandidat` dan `lowongan` tidak memiliki foreign key; penghapusan di satu tabel
@@ -240,4 +281,5 @@ contoh memiliki lowongan yang sesuai.
 - Status lowongan dibatasi oleh ENUM di database dan divalidasi ulang oleh
   Presenter.
 - Data contoh dapat dihapus kapan saja melalui antarmuka aplikasi.
-
+- Mengimpor ulang `mvp_db.sql` akan mengembalikan database ke kondisi awal dan
+  menghapus perubahan data.
