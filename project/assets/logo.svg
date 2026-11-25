@@ -1,0 +1,7 @@
+<!-- Logo NusaTech: simbol hexagon dengan kurung kode, dipakai di header dan favicon. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="56" height="62" viewBox="0 0 56 62" fill="none"
+     stroke="#0b4fdd" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+     role="img" aria-label="Logo NusaTech">
+  <path d="M28 3 52 16v30L28 59 4 46V16z"/>
+  <path d="m21 24-7 8 7 8M35 24l7 8-7 8M31 18l-6 26"/>
+</svg>

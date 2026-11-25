@@ -1,0 +1,471 @@
+/* =====================================================================
+   style.css - Gaya tampilan aplikasi rekrutmen IT NusaTech Solutions
+   ===================================================================== */
+
+/* ---------------------------------------------------------------------
+   1. Variabel warna dan reset dasar
+   --------------------------------------------------------------------- */
+:root {
+  --bg: #eef4fb;
+  --card: #ffffff;
+  --primary: #0b4fdd;
+  --primary-dark: #083a9e;
+  --accent: #0ea5a4;
+  --ink: #0d1b2a;
+  --mute: #5b6b82;
+  --line: #dbe5f3;
+  --soft: #e7efff;
+  --success: #127a4b;
+  --success-soft: #dcfce7;
+  --danger: #b42318;
+  --danger-soft: #fee4e2;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  /* Latar biru muda dengan aksen gradien halus bertema teknologi. */
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background:
+    radial-gradient(circle at 8% -5%, #d8e6ff 0, transparent 34%),
+    radial-gradient(circle at 100% 0, #d9f7f4 0, transparent 30%),
+    var(--bg);
+  color: var(--ink);
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  /* Ruang bawah agar konten dan footer tidak tertutup navigasi tetap. */
+  padding-bottom: 110px;
+}
+
+/* ---------------------------------------------------------------------
+   2. Kerangka halaman dan header merek
+   --------------------------------------------------------------------- */
+.wrap {
+  flex: 1;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 22px 18px;
+}
+
+.brand {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+/* Logo NusaTech tidak boleh mengecil saat teks memanjang. */
+.brand img {
+  flex-shrink: 0;
+}
+
+.brand h1 {
+  margin: 0;
+  color: var(--primary);
+  font-size: 30px;
+  letter-spacing: .08em;
+}
+
+.brand p {
+  margin: 2px 0 0;
+  color: var(--mute);
+  font-size: 14px;
+}
+
+/* Pil informasi jam kerja tim rekrutmen. */
+.pill {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  margin: 16px 0;
+  padding: 8px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--mute);
+  font-size: 13px;
+}
+
+/* Titik hijau sebagai indikator tim rekrutmen sedang aktif. */
+.pill i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 4px rgba(14, 165, 164, .16);
+}
+
+/* ---------------------------------------------------------------------
+   3. Hero dan tombol
+   --------------------------------------------------------------------- */
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: 28px;
+  border-radius: 22px;
+  background: linear-gradient(135deg, #071a33 0%, #0a3fb0 55%, #0b6fd6 100%);
+  color: #f4f8ff;
+  box-shadow: 0 18px 38px rgba(9, 42, 102, .28);
+}
+
+/* Ornamen lingkaran tipis agar hero terasa seperti produk teknologi. */
+.hero::after {
+  content: "";
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 220px;
+  height: 220px;
+  border: 1px solid rgba(255, 255, 255, .18);
+  border-radius: 50%;
+  box-shadow: 0 0 0 30px rgba(255, 255, 255, .05), 0 0 0 60px rgba(255, 255, 255, .04);
+  pointer-events: none;
+}
+
+/* Teks hero tetap berada di atas ornamen. */
+.hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+.hero h2 {
+  margin: 0 0 8px;
+  font-size: 26px;
+}
+
+.hero p {
+  margin: 0 0 18px;
+  max-width: 55ch;
+  color: #d6e4ff;
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+/* Gaya dasar semua tombol dan tautan bergaya tombol. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 8px 8px 0;
+  padding: 11px 18px;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  font: 700 14px 'Space Grotesk', sans-serif;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform .15s ease, background .15s ease, box-shadow .15s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn.primary {
+  background: var(--primary);
+  color: #ffffff;
+  box-shadow: 0 8px 18px rgba(11, 79, 221, .22);
+}
+
+.btn.primary:hover {
+  background: var(--primary-dark);
+}
+
+.btn.ghost {
+  border-color: var(--line);
+  background: var(--card);
+  color: var(--ink);
+}
+
+/* Tombol di dalam hero dibalik agar kontras dengan latar gelap. */
+.hero .btn.primary {
+  background: #ffffff;
+  color: var(--primary);
+}
+
+.hero .btn.primary:hover {
+  background: #eaf1ff;
+}
+
+.hero .btn.ghost {
+  border-color: rgba(255, 255, 255, .4);
+  background: rgba(255, 255, 255, .12);
+  color: #ffffff;
+}
+
+.btn.sm {
+  margin: 0;
+  padding: 8px 14px;
+  font-size: 13px;
+}
+
+/* Penanda fokus yang jelas untuk aksesibilitas keyboard. */
+.btn:focus-visible,
+.lnk:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 3px solid #f59e0b;
+  outline-offset: 2px;
+}
+
+/* Label kecil di atas kartu daftar. */
+.eyebrow {
+  margin: 28px 0 10px;
+  color: var(--mute);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .14em;
+}
+
+.card {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--card);
+  box-shadow: 0 14px 34px rgba(13, 27, 42, .07);
+}
+
+/* ---------------------------------------------------------------------
+   4. Tabel, aksi, dan badge status
+   --------------------------------------------------------------------- */
+.scroll {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 680px;
+}
+
+th {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--line);
+  background: #f7faff;
+  color: var(--mute);
+  font-size: 12px;
+  letter-spacing: .06em;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--line);
+  font-size: 14px;
+}
+
+td b {
+  color: var(--primary);
+  font-size: 15px;
+}
+
+/* Pesan saat data masih kosong. */
+td.empty {
+  padding: 32px;
+  color: var(--mute);
+  text-align: center;
+}
+
+.aksi {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.aksi form {
+  margin: 0;
+}
+
+/* Tombol kecil Edit/Hapus di dalam tabel. */
+.lnk {
+  padding: 8px 14px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--danger);
+  color: #ffffff;
+  font: 700 13px 'Space Grotesk', sans-serif;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.lnk.edit {
+  background: var(--accent);
+}
+
+.badge {
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.badge.buka {
+  background: var(--success-soft);
+  color: var(--success);
+}
+
+.badge.tutup {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+/* Footer kartu: total data dan tombol tambah. */
+.foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  border-top: 1px solid var(--line);
+  color: var(--mute);
+  font-size: 14px;
+}
+
+.foot b {
+  color: var(--ink);
+}
+
+/* ---------------------------------------------------------------------
+   5. Form tambah/ubah data
+   --------------------------------------------------------------------- */
+.form {
+  max-width: 580px;
+  padding: 24px;
+}
+
+.form h2 {
+  margin: 0 0 6px;
+  color: var(--primary);
+}
+
+.form label {
+  display: block;
+  margin-top: 14px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.form input,
+.form select {
+  width: 100%;
+  margin-top: 6px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fbfdff;
+  color: var(--ink);
+  font: 500 15px 'Space Grotesk', sans-serif;
+}
+
+.form input:focus,
+.form select:focus {
+  border-color: var(--primary);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(11, 79, 221, .12);
+}
+
+/* Keterangan kecil di bawah field, misalnya aturan dropdown posisi. */
+.form .hint {
+  display: block;
+  margin-top: 6px;
+  color: var(--mute);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.btns {
+  margin-top: 22px;
+}
+
+/* ---------------------------------------------------------------------
+   6. Navigasi bawah
+   --------------------------------------------------------------------- */
+.nav {
+  position: fixed;
+  left: 50%;
+  bottom: 14px;
+  display: flex;
+  gap: 6px;
+  width: min(420px, calc(100% - 24px));
+  padding: 6px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, .92);
+  box-shadow: 0 12px 30px rgba(13, 27, 42, .16);
+  transform: translateX(-50%);
+  backdrop-filter: blur(10px);
+}
+
+.nav a {
+  flex: 1;
+  padding: 9px 6px;
+  border-radius: 16px;
+  color: var(--mute);
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  transition: background .15s ease, color .15s ease;
+}
+
+.nav a span {
+  display: block;
+  font-size: 19px;
+  line-height: 1.3;
+}
+
+/* Menu yang sedang aktif diberi latar biru. */
+.nav a.active {
+  background: var(--primary);
+  color: #ffffff;
+}
+
+.nav a:not(.active):hover {
+  background: var(--soft);
+  color: var(--primary);
+}
+
+/* ---------------------------------------------------------------------
+   7. Footer credit
+   --------------------------------------------------------------------- */
+.credit {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 22px 18px 8px;
+  color: var(--mute);
+  font-size: 13px;
+  text-align: center;
+}
+
+.credit strong {
+  color: var(--ink);
+}
+
+/* ---------------------------------------------------------------------
+   8. Penyesuaian layar kecil
+   --------------------------------------------------------------------- */
+@media (max-width: 520px) {
+  .brand h1 {
+    font-size: 24px;
+  }
+
+  .brand p {
+    font-size: 12px;
+  }
+
+  .hero {
+    padding: 22px;
+  }
+
+  .hero p {
+    font-size: 15px;
+  }
+
+  .credit {
+    font-size: 12px;
+  }
+}
